@@ -4,21 +4,22 @@ import { Card, Input, Icon, Button, Spin, message } from 'antd'
 import '../static/css/login.css'
 import axios from 'axios'
 
-function Login() {
+function Login(props) {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [isLoading, setisLoading] = useState(false)
 
     const checkLogin = () => {
-        setisLoading(true)
         if (userName && password) {
-            
+            setisLoading(true)
+            setTimeout(() => {
+                message.success('登录成功')
+                props.history.push('/index')
+                setisLoading(false)
+            }, 1000)
         } else {
             message.error('用户名和密码不能为空')
         }
-        setTimeout(() => {
-            setisLoading(false)
-        }, 1000)
     }
     return (
         <div className="login-div">
