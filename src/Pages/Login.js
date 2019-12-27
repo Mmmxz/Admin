@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css'
-import { Card, Input, Icon, Button, Spin } from 'antd'
+import { Card, Input, Icon, Button, Spin, message } from 'antd'
 import '../static/css/login.css'
+import axios from 'axios'
 
 function Login() {
     const [userName, setUserName] = useState('')
@@ -9,8 +10,12 @@ function Login() {
     const [isLoading, setisLoading] = useState(false)
 
     const checkLogin = () => {
-        console.log(userName, password)
         setisLoading(true)
+        if (userName && password) {
+            
+        } else {
+            message.error('用户名和密码不能为空')
+        }
         setTimeout(() => {
             setisLoading(false)
         }, 1000)
