@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'antd/dist/antd.css'
 import { Card, Input, Icon, Button, Spin, message } from 'antd'
 import '../static/css/login.css'
+import servicePath from '../config/apiConfig'
 import axios from 'axios'
 
 function Login(props) {
@@ -12,11 +13,29 @@ function Login(props) {
     const checkLogin = () => {
         if (userName && password) {
             setisLoading(true)
-            setTimeout(() => {
-                message.success('登录成功')
-                props.history.push('/index')
+            let dataProps = {
+                userName,
+                password
+            }
+            axios({
+                url: servicePath.checkLogin,
+                method: 'post',
+                data: dataProps,
+                withCredentials: true
+            }).then(res => {
                 setisLoading(false)
-            }, 1000)
+                console.log(res.data)
+                if (res.data.success) {
+                    message.success(res.data.description)
+                    props.history.push('/index')
+                } else {
+                    message.error(res.data.description)
+                }
+            })
+            // setTimeout(() => {
+            //     message.success('登录成功')
+            //     props.history.push('/index')
+            // }, 1000)
         } else {
             message.error('用户名和密码不能为空')
         }
